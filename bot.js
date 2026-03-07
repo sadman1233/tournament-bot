@@ -8,7 +8,7 @@ http.createServer((req, res) => {
 }).listen(process.env.PORT || 3000);
 
 // ২. আপনার বটের টোকেন [cite: 2026-01-15]
-const token = '8628945913:AAGvlqMBlhdhMKz3dUwgds9eoaBWTcDL9MU';
+const token = '8628945913:AAHaYX_ZAHXhyj8JcrNjADBkKtIqzX6FowA';
 const bot = new TelegramBot(token, {polling: true});
 
 console.log("RDX E-Sports বট এখন মেম্বারদের জন্য প্রস্তুত... 🔥");
@@ -45,3 +45,4 @@ bot.on('new_chat_members', (msg) => {
 
 // এরর হ্যান্ডলিং [cite: 2026-01-15]
 bot.on("polling_error", (err) => console.log(err.code));
+
