@@ -1,19 +1,19 @@
 const TelegramBot = require('node-telegram-bot-api');
 const http = require('http');
 
-// ১. Render-এর পোর্ট এরর সমাধান [cite: 2026-03-07]
+// ১. Render-এর পোর্ট এরর সমাধান (Port Binding) [cite: 2026-03-07]
 http.createServer((req, res) => {
   res.write('Bot is running!');
   res.end();
 }).listen(process.env.PORT || 3000);
 
-// ২. আপনার বটের টোকেন [cite: 2026-01-15]
+// ২. আপনার নতুন টোকেন (নিচে আপনার দেওয়া নতুন টোকেনটি বসানো হয়েছে) [cite: 2026-03-07]
 const token = '8628945913:AAHaYX_ZAHXhyj8JcrNjADBkKtIqzX6FowA';
 const bot = new TelegramBot(token, {polling: true});
 
 console.log("RDX E-Sports বট এখন মেম্বারদের জন্য প্রস্তুত... 🔥");
 
-// ৩. নতুন মেম্বার জয়েন করলে কাস্টম মেসেজ [cite: 2026-01-15, 2026-03-07]
+// ৩. নতুন মেম্বার জয়েন করলে কাস্টম মেসেজ [cite: 2026-03-07]
 bot.on('new_chat_members', (msg) => {
     const chatId = msg.chat.id;
     const newUser = msg.new_chat_members[0].first_name; 
@@ -43,6 +43,5 @@ bot.on('new_chat_members', (msg) => {
     bot.sendMessage(chatId, welcomeMessage);
 });
 
-// এরর হ্যান্ডলিং [cite: 2026-01-15]
-bot.on("polling_error", (err) => console.log(err.code));
-
+// এরর হ্যান্ডলিং [cite: 2026-03-07]
+bot.on("polling_error", (err) => console.log("Telegram Error:", err.code));
