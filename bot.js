@@ -1,25 +1,47 @@
 const TelegramBot = require('node-telegram-bot-api');
+const http = require('http');
 
-// আপনার বটের টোকেন [cite: 2026-01-15]
+// ১. Render-এর পোর্ট এরর সমাধান [cite: 2026-03-07]
+http.createServer((req, res) => {
+  res.write('Bot is running!');
+  res.end();
+}).listen(process.env.PORT || 3000);
+
+// ২. আপনার বটের টোকেন [cite: 2026-01-15]
 const token = '8628945913:AAGvlqMBlhdhMKz3dUwgds9eoaBWTcDL9MU';
 const bot = new TelegramBot(token, {polling: true});
 
-console.log("টুর্নামেন্ট বট এখন মেম্বারদের জন্য প্রস্তুত... 🔥");
+console.log("RDX E-Sports বট এখন মেম্বারদের জন্য প্রস্তুত... 🔥");
 
-// কেউ গ্রুপে জয়েন করলেই এই ফাংশনটি কাজ করবে
+// ৩. নতুন মেম্বার জয়েন করলে কাস্টম মেসেজ [cite: 2026-01-15, 2026-03-07]
 bot.on('new_chat_members', (msg) => {
     const chatId = msg.chat.id;
     const newUser = msg.new_chat_members[0].first_name; 
 
-    const welcomeMessage = `👋 স্বাগতম ${newUser}! 
+    const welcomeMessage = `╔════════════════════╗
+      🏆 WELCOME 🏆
+╚════════════════════╝
 
-আমাদের টুর্নামেন্ট গ্রুপে জয়েন করার জন্য ধন্যবাদ। 🏆
-গ্রুপে মেসেজ দেওয়া বন্ধ থাকলেও আপনার জন্য এই স্বাগতম মেসেজটি অটোমেটিক পাঠানো হয়েছে।
+👋 স্বাগতম ${newUser}!
 
-📜 নিয়মাবলী জানতে আমাদের সাথেই থাকুন!`;
+🎮 RDX E-SPORTS ORG OFFICIAL  
+টুর্নামেন্ট গ্রুপে জয়েন করার জন্য ধন্যবাদ।
+
+📢 IMPORTANT RULES
+
+➤ সকল আপডেট শুধুমাত্র Admin দের পক্ষ থেকে দেওয়া হবে।  
+➤ ম্যাচের সময় ও রুম ইনফো ভালোভাবে খেয়াল রাখবেন।  
+➤ কোনো সমস্যা হলে সরাসরি Admin কে ইনবক্স করবেন।  
+➤ Admin এর সিদ্ধান্তই চূড়ান্ত।
+
+⚡ Fair Play Only  
+🚫 No Hack | No Toxic
+
+🔥 আপনার টিমের জন্য শুভকামনা!
+🏆 RDX E-SPORTS ORG OFFICIAL`;
 
     bot.sendMessage(chatId, welcomeMessage);
 });
 
-// কোনো এরর হলে সেটি কনসোলে দেখাবে
+// এরর হ্যান্ডলিং [cite: 2026-01-15]
 bot.on("polling_error", (err) => console.log(err.code));
